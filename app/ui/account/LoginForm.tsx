@@ -5,7 +5,6 @@ import { useState } from "react";
 export default function LoginForm() {
 	// use state to control form field values
 	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	return (

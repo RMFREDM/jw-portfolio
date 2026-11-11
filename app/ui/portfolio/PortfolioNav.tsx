@@ -9,13 +9,13 @@ export default function PortfolioNav() {
 		>
 			<Link
 				href={"/"}
-				className="text-default active:text-indigo-800 active:tracking-wide w-5 p-1"
+				className="text-default hover:text-blue-500 hover:tracking-wide active:text-indigo-800 w-5 p-1"
 			>
 				Home
 			</Link>
 			<Link
 				href={"/articles"}
-				className="text-default active:text-indigo-800 active:tracking-wide w-5 p-1"
+				className="text-default hover:text-blue-500 hover:tracking-wide active:text-indigo-800 w-5 p-1"
 			>
 				Articles
 			</Link>

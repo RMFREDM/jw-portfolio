@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 			lang="en"
 			className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
 		>
-			<body className="h-full w-full p-1">
+			<body className="h-full w-full">
 				<PortfolioNav />
 				{children}
 			</body>

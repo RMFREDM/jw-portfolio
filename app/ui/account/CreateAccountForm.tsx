@@ -99,13 +99,8 @@ export default function CreateAccountForm() {
 					aria-disabled={isLoading}
 					className="align-center border rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 disabled:bg-gray-100 h-fit w-fit px-1"
 				>
-					Submit
+					Create
 				</button>
-				{state.message && (
-					<p className="mt-2 text-sm text-red-500 w-65">
-						{state.message}
-					</p>
-				)}
 			</form>
 		</div>
 	);

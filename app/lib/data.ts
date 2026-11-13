@@ -21,3 +21,17 @@ export async function getAccountByUsername(
 		throw new Error("Failed to fetch account.");
 	}
 }
+
+export async function getUsernameBEmail(
+	email: string,
+): Promise<Account | undefined> {
+	try {
+		const account = await sql<
+			Account[]
+		>`SELECT username FROM accounts WHERE email=${email}`;
+		return account[0];
+	} catch (error) {
+		console.error("Failed to fetch username:", error);
+		throw new Error("Failed to fetch username.");
+	}
+}

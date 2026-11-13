@@ -1,5 +1,7 @@
 import Link from "next/link";
 import AccountNavSection from "../account/AccountNavSection";
+import { Suspense } from "react";
+import AccountNavSectionSkeleton from "../account/AccountNavSectionSkeleton";
 
 export default function PortfolioNav() {
 	return (
@@ -19,7 +21,9 @@ export default function PortfolioNav() {
 			>
 				Articles
 			</Link>
-			<AccountNavSection />
+			<Suspense fallback={<AccountNavSectionSkeleton />}>
+				<AccountNavSection />
+			</Suspense>
 		</nav>
 	);
 }

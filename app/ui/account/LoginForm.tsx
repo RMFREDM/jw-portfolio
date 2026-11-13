@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { authenticate } from "@/app/lib/actions";
+import { useActionState, useState } from "react";
 
 export default function LoginForm() {
+	// create teh form state
+	const [errorMessage, formAction, isLoading] = useActionState(
+		authenticate,
+		undefined,
+	);
+
 	// use state to control form field values
 	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	return (
 		<div className="flex justify-center">
-			<form className="p-1 grid grid-cols-1 grid-rows-4 w-fit">
-				<div id="username-section" className="flex justify-between p-1">
+			<form
+				action={formAction}
+				className="p-1 grid grid-cols-1 grid-rows-4 w-fit"
+			>
+				<div id="username-section" className="flex flex-col p-1">
 					<label htmlFor="username">Username</label>
 					<input
 						id="username"
@@ -22,11 +31,11 @@ export default function LoginForm() {
 							e.preventDefault();
 							setUsername(e.target.value);
 						}}
-						className="border rounded m-1"
+						className="border rounded m-0.5"
 					></input>
 				</div>
 
-				<div id="password-section" className="flex justify-between p-1">
+				<div id="password-section" className="flex flex-col p-1">
 					<label htmlFor="password">Password</label>
 					<input
 						id="password"
@@ -37,16 +46,23 @@ export default function LoginForm() {
 							e.preventDefault();
 							setPassword(e.target.value);
 						}}
-						className="border rounded m-1"
+						className="border rounded m-0.5"
 					></input>
 				</div>
 
+				<input type="hidden" name="redirectTo" value={"/"} />
 				<button
 					type="submit"
-					className="align-center border rounded bg-gray-300 active:bg-gray-500 h-fit w-fit px-1"
+					aria-disabled={isLoading}
+					className="align-center border rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 disabled:bg-gray-100 h-fit w-fit px-1"
 				>
-					Submit
+					Log In
 				</button>
+				{errorMessage && (
+					<p className="mt-2 text-sm text-red-500 w-65">
+						{errorMessage}
+					</p>
+				)}
 			</form>
 		</div>
 	);

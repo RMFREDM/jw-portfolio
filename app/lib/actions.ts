@@ -97,3 +97,5 @@ export async function authenticate(
 		throw error;
 	}
 }
+
+/* Articles Section */

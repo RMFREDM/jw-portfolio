@@ -36,6 +36,20 @@ export async function getUsernameByEmail(
 	}
 }
 
+export async function getUsernameById(
+	id: string,
+): Promise<Account | undefined> {
+	try {
+		const account = await sql<
+			Account[]
+		>`SELECT username FROM accounts WHERE id=${id}`;
+		return account[0];
+	} catch (error) {
+		console.error("Failed to fetch username:", error);
+		throw new Error("Failed to fetch username.");
+	}
+}
+
 export async function getAccountIdByEmail(
 	email: string,
 ): Promise<Account | undefined> {
@@ -81,5 +95,24 @@ export async function getArticleById(id: string) {
 		// log and throw the error that occurred
 		console.log(error);
 		throw new Error("Failed to fetch the article: " + error);
+	}
+}
+
+/* Comments Section */
+
+// create a function that gets all comments for a specific article
+export async function getCommentsByArticleId(articleId: string) {
+	// define a variable to hold articles and attempt to fetch them
+	let comments;
+	try {
+		comments =
+			await sql`SELECT * FROM comments where articleId=${articleId}`;
+
+		// return the recipe
+		return comments;
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		throw new Error("Failed to fetch the comments: " + error);
 	}
 }

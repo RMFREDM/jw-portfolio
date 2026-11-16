@@ -1,6 +1,11 @@
 import { Suspense } from "react";
 import ArticlesList from "../ui/articles/ArticlesList";
 import ArticlesListSkeleton from "../ui/articles/ArticlesListSkeleton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Articles",
+};
 
 export default function Page() {
 	return (

@@ -35,3 +35,37 @@ export async function getUsernameBEmail(
 		throw new Error("Failed to fetch username.");
 	}
 }
+
+/* Articles Section */
+
+// create a function that gets all articles from the database
+export async function getArticles() {
+	// define a variable to hold articles and attempt to fetch them
+	let articles;
+	try {
+		articles = await sql`SELECT * FROM articles`;
+
+		// return the articles
+		return articles;
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		throw new Error("Failed to fetch articles: " + error);
+	}
+}
+
+// create a function that gets one article from the database based on its id
+export async function getArticleById(id: string) {
+	// define a variable to hold articles and attempt to fetch them
+	let article;
+	try {
+		article = await sql`SELECT * FROM articles where id=${id}`;
+
+		// return the recipe
+		return article[0];
+	} catch (error) {
+		// log and throw the error that occurred
+		console.log(error);
+		throw new Error("Failed to fetch the article: " + error);
+	}
+}

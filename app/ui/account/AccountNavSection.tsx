@@ -1,4 +1,4 @@
-import { getUsernameBEmail } from "@/app/lib/data";
+import { getUsernameByEmail } from "@/app/lib/data";
 import { auth, signOut } from "@/auth";
 import Link from "next/link";
 
@@ -8,7 +8,7 @@ export default async function AccountNavSection() {
 	const userSession = session?.user;
 	let username;
 	if (userSession) {
-		username = (await getUsernameBEmail(userSession?.email!))?.username;
+		username = (await getUsernameByEmail(userSession?.email!))?.username;
 	}
 
 	return (

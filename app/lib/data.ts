@@ -22,7 +22,7 @@ export async function getAccountByUsername(
 	}
 }
 
-export async function getUsernameBEmail(
+export async function getUsernameByEmail(
 	email: string,
 ): Promise<Account | undefined> {
 	try {
@@ -33,6 +33,20 @@ export async function getUsernameBEmail(
 	} catch (error) {
 		console.error("Failed to fetch username:", error);
 		throw new Error("Failed to fetch username.");
+	}
+}
+
+export async function getAccountIdByEmail(
+	email: string,
+): Promise<Account | undefined> {
+	try {
+		const account = await sql<
+			Account[]
+		>`SELECT id FROM accounts WHERE email=${email}`;
+		return account[0];
+	} catch (error) {
+		console.error("Failed to fetch id:", error);
+		throw new Error("Failed to fetch id.");
 	}
 }
 

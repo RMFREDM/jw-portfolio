@@ -171,7 +171,38 @@ export async function createComment(
 		};
 	}
 
-	// redirect the user to the login page
+	// redirect the user to the article comment section
+	revalidatePath(`/articles/${articleId}#comments-section`);
+	redirect(`/articles/${articleId}#comments-section`);
+}
+
+// define a server action that deletes a comment
+export async function deleteComment(commentId: string, articleId: string) {
+	// get the account id and prevent submission if it doesn't exist
+	const accountEmail = (await auth())?.user?.email;
+	if (!accountEmail) {
+		return {
+			message: "An account must be associated with this comment",
+		};
+	}
+	const accountId = (await getAccountIdByEmail(accountEmail))?.id;
+	console.log(accountId);
+
+	// try to delete the comment
+	try {
+		await sql`DELETE FROM comments
+		WHERE id=${commentId}`;
+	} catch (error) {
+		// log and return the error
+		console.error(error);
+		return {
+			message:
+				"An internal error ocurred and we failed to delete the comment: " +
+				error,
+		};
+	}
+
+	// redirect the user to the article comment section
 	revalidatePath(`/articles/${articleId}#comments-section`);
 	redirect(`/articles/${articleId}#comments-section`);
 }

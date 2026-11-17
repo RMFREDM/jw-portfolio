@@ -26,7 +26,10 @@ export default async function CommentDisplay(props: {
 						id="modify-comment"
 						className="flex justify-between w-30 h-fit"
 					>
-						<EditCommentForm />
+						<EditCommentForm
+							comment={comment}
+							articleId={props.articleId}
+						/>
 						<DeleteCommentButton
 							commentId={comment.id}
 							articleId={props.articleId}

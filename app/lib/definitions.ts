@@ -13,3 +13,11 @@ export type Article = {
 	title: string;
 	contents: string;
 };
+
+// define a type for comment objects
+export type Comment = {
+	id: string;
+	content: string;
+	articleid: string;
+	accountid: string;
+};

@@ -1,5 +1,4 @@
 import { deleteComment } from "@/app/lib/actions";
-import { Comment } from "@/app/lib/definitions";
 
 export default async function DeleteCommentButton(props: {
 	commentId: string;

@@ -7,8 +7,8 @@ export default async function AccountNavSection() {
 	const session = await auth();
 	const userSession = session?.user;
 	let username;
-	if (userSession) {
-		username = (await getUsernameByEmail(userSession?.email!))?.username;
+	if (userSession?.email) {
+		username = (await getUsernameByEmail(userSession.email))?.username;
 	}
 
 	return (

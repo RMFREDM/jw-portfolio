@@ -138,23 +138,22 @@ export async function createComment(
 		};
 	}
 	const accountId = (await getAccountIdByEmail(accountEmail))?.id;
-	console.log(accountId);
 
 	// validate the form data
-	const validatedAccount = CreateCommentSchema.safeParse({
+	const validatedComment = CreateCommentSchema.safeParse({
 		content: formData.get("content"),
 	});
 
 	// return early if validation fails
-	if (!validatedAccount.success) {
+	if (!validatedComment.success) {
 		return {
-			errors: validatedAccount.error.flatten().fieldErrors,
-			message: "Failed to create the account: field errors",
+			errors: validatedComment.error.flatten().fieldErrors,
+			message: "Failed to create the comment: field errors",
 		};
 	}
 
 	// get the form data
-	const { content } = validatedAccount.data;
+	const { content } = validatedComment.data;
 
 	// try to create the comment
 	try {
@@ -174,6 +173,69 @@ export async function createComment(
 	// redirect the user to the article comment section
 	revalidatePath(`/articles/${articleId}#comments-section`);
 	redirect(`/articles/${articleId}#comments-section`);
+}
+
+// define a server action that edits a comment
+const EditCommentSchema = CommentFormSchema.omit({
+	id: true,
+	articleId: true,
+	accountId: true,
+});
+export async function editComment(
+	id: string,
+	commentAccountId: string,
+	articleId: string,
+	prevState: CommentState,
+	formData: FormData,
+) {
+	// get the account id and prevent submission if it doesn't exist
+	const accountEmail = (await auth())?.user?.email;
+	if (!accountEmail) {
+		return {
+			message: "An account must be associated with this comment",
+		};
+	}
+	const accountId = (await getAccountIdByEmail(accountEmail))?.id;
+	if (accountId != commentAccountId) {
+		return {
+			message: "Only the creator of a comment can edit it",
+		};
+	}
+
+	// validate the form data
+	const validatedComment = EditCommentSchema.safeParse({
+		content: formData.get("content"),
+	});
+
+	// return early if validation fails
+	if (!validatedComment.success) {
+		return {
+			errors: validatedComment.error.flatten().fieldErrors,
+			message: "Failed to edit the comment: field errors",
+		};
+	}
+
+	// get the form data
+	const { content } = validatedComment.data;
+
+	// try to create the comment
+	try {
+		await sql`Update comments
+		Set content=${content}
+		Where id=${id}`;
+	} catch (error) {
+		// log and return the error
+		console.error(error);
+		return {
+			message:
+				"An internal error ocurred and we failed to edit the comment: " +
+				error,
+		};
+	}
+
+	// redirect the user to the comment
+	revalidatePath(`/articles/${articleId}#${id}`);
+	redirect(`/articles/${articleId}#${id}`);
 }
 
 // define a server action that deletes a comment

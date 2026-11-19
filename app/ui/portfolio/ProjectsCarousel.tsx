@@ -19,12 +19,17 @@ export default function ProjectsCarousel() {
 			image: "tesd-1000",
 			url: "https://tesd-1000.vercel.app/",
 		},
+		{
+			title: "Separating Events from Effects Code-along",
+			image: "separating-events",
+			url: "https://tesd-1000-separating-events-from-ef.vercel.app/",
+		},
 	];
 
 	return (
 		<div
 			id="project-carousel"
-			className="border rounded bg-sky-100 p-1 md:w-200"
+			className="border rounded bg-sky-100 p-1 w-200"
 		>
 			<h2 className="text-xl">View my projects!</h2>
 			<div className=" flex justify-between overflow-scroll">

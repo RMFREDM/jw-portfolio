@@ -3,11 +3,21 @@ import ProjectDisplay from "./ProjectDisplay";
 
 export default function ProjectsCarousel() {
 	// define a list to hold the projects
-	const projectsList: [Project] = [
+	const projectsList: Array<Project> = [
 		{
 			title: "App Router Code-along",
-			image: "",
+			image: "app-router",
 			url: "https://tesd-1000-app-router-code-along.vercel.app/",
+		},
+		{
+			title: "Recipe Database",
+			image: "recipe-db",
+			url: "https://recipe-db-orpin.vercel.app/",
+		},
+		{
+			title: "TESD 1000 Code-alongs",
+			image: "tesd-1000",
+			url: "https://tesd-1000.vercel.app/",
 		},
 	];
 
@@ -16,17 +26,14 @@ export default function ProjectsCarousel() {
 			id="project-carousel"
 			className="border rounded bg-sky-100 p-1 md:w-200"
 		>
-			<nav>
-				<button className="border rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-500 hover:cursor-pointer h-fit px-1 ml-1">
-					Next
-				</button>
-			</nav>
-
-			{projectsList.map((project) => (
-				<div key={project.title}>
-					<ProjectDisplay project={project} />
-				</div>
-			))}
+			<h2 className="text-xl">View my projects!</h2>
+			<div className=" flex justify-between overflow-scroll">
+				{projectsList.map((project) => (
+					<div key={project.title}>
+						<ProjectDisplay project={project} />
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }

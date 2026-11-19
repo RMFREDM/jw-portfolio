@@ -2,12 +2,13 @@ import Link from "next/link";
 import AccountNavSection from "../account/AccountNavSection";
 import { Suspense } from "react";
 import AccountNavSectionSkeleton from "../account/AccountNavSectionSkeleton";
+import WeatherNavSection from "../weather/WeatherNevSection";
 
 export default function PortfolioNav() {
 	return (
 		<nav
 			id="portfolio-nav"
-			className="bg-sky-100 rounded h-10 flex flex-row p-1 justify-evenly"
+			className="bg-sky-100 rounded h-10 flex flex-row p-1 px-10 justify-between"
 		>
 			<Link
 				href={"/"}
@@ -24,6 +25,7 @@ export default function PortfolioNav() {
 			<Suspense fallback={<AccountNavSectionSkeleton />}>
 				<AccountNavSection />
 			</Suspense>
+			<WeatherNavSection />
 		</nav>
 	);
 }

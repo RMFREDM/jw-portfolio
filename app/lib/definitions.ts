@@ -21,3 +21,10 @@ export type Comment = {
 	articleid: string;
 	accountid: string;
 };
+
+// define a type for project objects
+export type Project = {
+	title: string;
+	image: string;
+	url: string;
+};

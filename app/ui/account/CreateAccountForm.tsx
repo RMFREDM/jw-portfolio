@@ -68,6 +68,11 @@ export default function CreateAccountForm() {
 								{error}
 							</p>
 						))}
+					{state.message && (
+						<p className="mt-2 text-sm text-red-500 w-65">
+							{state.message}
+						</p>
+					)}
 				</div>
 
 				<div id="password-section" className="flex flex-col p-1">

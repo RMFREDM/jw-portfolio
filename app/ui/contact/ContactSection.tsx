@@ -12,14 +12,18 @@ export default async function ContactSection() {
 				<p>
 					<Link
 						href="/login"
-						className="text-default hover:text-blue-500 active:text-indigo-800 hover:tracking-wide"
+						className="text-blue-500 hover:text-blue-700 active:text-indigo-800 hover:tracking-wide"
 					>
 						Log in
 					</Link>{" "}
 					to contact me.
 				</p>
 			)}
-			{user && <ContactForm />}
+			{user && (
+				<div className="flex justify-center">
+					<ContactForm />
+				</div>
+			)}
 		</div>
 	);
 }

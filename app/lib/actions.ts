@@ -268,3 +268,74 @@ export async function deleteComment(commentId: string, articleId: string) {
 	revalidatePath(`/articles/${articleId}#comments-section`);
 	redirect(`/articles/${articleId}#comments-section`);
 }
+
+/* Message Section */
+
+// define an MessageState type for message form errors
+export type MessageState = {
+	errors?: {
+		message?: string[] | null;
+	} | null;
+	message?: string | null;
+};
+
+// define a message form schematic for message forms
+const MessageFormSchema = z.object({
+	id: z.string(),
+	message: z.string().trim().min(1, { error: "Message cannot be empty." }),
+	accountId: z.string().min(1, { error: "Message must have an account" }),
+});
+
+// define a server action that creates a contactMessage
+const CreateMessageSchema = MessageFormSchema.omit({
+	id: true,
+	accountId: true,
+});
+export async function createMessage(
+	prevState: MessageState,
+	formData: FormData,
+) {
+	// get the account id and prevent submission if it doesn't exist
+	const accountEmail = (await auth())?.user?.email;
+	if (!accountEmail) {
+		return {
+			message: "An account must be associated with this message",
+		};
+	}
+	const accountId = (await getAccountIdByEmail(accountEmail))?.id;
+
+	// validate the form data
+	const validatedComment = CreateMessageSchema.safeParse({
+		message: formData.get("message"),
+	});
+
+	// return early if validation fails
+	if (!validatedComment.success) {
+		console.log("Form Validation Failed");
+		return {
+			errors: validatedComment.error.flatten().fieldErrors,
+			message: "Failed to create the message: field errors",
+		};
+	}
+
+	// get the form data
+	const { message } = validatedComment.data;
+
+	// try to create the comment
+	try {
+		await sql`INSERT INTO messages (message, accountId)
+		VALUES (${message}, ${accountId!})`;
+	} catch (error) {
+		// log and return the error
+		console.error(error);
+		return {
+			message:
+				"An internal error ocurred and we failed to create the message: " +
+				error,
+		};
+	}
+
+	// redirect the user to the homepage
+	revalidatePath(`/`);
+	redirect(`/`);
+}

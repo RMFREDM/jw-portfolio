@@ -44,6 +44,11 @@ export default function ContactForm() {
 						{error}
 					</p>
 				))}
+			{state.message && (
+				<p className="mt-2 text-sm text-red-500 w-65">
+					{state.message}
+				</p>
+			)}
 
 			<button
 				type="submit"

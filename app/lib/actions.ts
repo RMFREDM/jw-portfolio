@@ -106,9 +106,7 @@ export async function authenticate(
 // define an CommentState type for comment form errors
 export type CommentState = {
 	errors?: {
-		id?: string[] | null;
-		message?: string[] | null;
-		accountId?: string[] | null;
+		content?: string[] | null;
 	} | null;
 	message?: string | null;
 };
